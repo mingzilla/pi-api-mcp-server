@@ -5,6 +5,15 @@ import { z } from "zod";
 import fetch from "node-fetch";
 import { Buffer } from 'buffer';
 
+// Logging
+const logError = (message: string) => {
+  console.error(`ERROR: ${message}`);
+};
+
+const logInfo = (message: string) => {
+  console.error(`INFO: ${message}`);
+};
+
 // Parse command line arguments
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -30,15 +39,6 @@ let apiUrlSet: boolean = !!API_BASE_URL;
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) return error.message;
   return String(error);
-};
-
-// Logging
-const logError = (message: string) => {
-  console.error(`ERROR: ${message}`);
-};
-
-const logInfo = (message: string) => {
-  console.error(`INFO: ${message}`);
 };
 
 // Create an MCP server
