@@ -4,6 +4,13 @@ import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import fetch from "node-fetch";
 import { Buffer } from 'buffer';
+// Logging
+const logError = (message) => {
+    console.error(`ERROR: ${message}`);
+};
+const logInfo = (message) => {
+    console.error(`INFO: ${message}`);
+};
 // Parse command line arguments
 function parseArgs() {
     const args = process.argv.slice(2);
@@ -25,13 +32,6 @@ const getErrorMessage = (error) => {
     if (error instanceof Error)
         return error.message;
     return String(error);
-};
-// Logging
-const logError = (message) => {
-    console.error(`ERROR: ${message}`);
-};
-const logInfo = (message) => {
-    console.error(`INFO: ${message}`);
 };
 // Create an MCP server
 const server = new McpServer({

@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 GITHUB_REPO="mingzilla/pi-api-mcp-server"
-NPM_PACKAGE="@mingzilla/pi-api-server"
+NPM_PACKAGE="@mingzilla/pi-api-mcp-server"
 
 # Build project first
 echo -e "${YELLOW}Building project...${NC}"
