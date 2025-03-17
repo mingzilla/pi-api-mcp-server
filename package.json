@@ -24,13 +24,11 @@
     "type": "git",
     "url": "https://github.com/mingzilla/pi-api-mcp-server"
   },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.7.0",
-    "node-fetch": "^3.3.2",
-    "zod": "^3.24.2"
-  },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
     "@types/node": "^20.17.24",
-    "typescript": "^5.8.2"
+    "node-fetch": "^3.3.2",
+    "typescript": "^5.8.2",
+    "zod": "^3.24.2"
   }
 }
