@@ -1,6 +1,6 @@
 {
-  "name": "@mingzilla/pi-api-mcp-server",
-  "version": "1.0.0",
+  "name": "@mingzilla/pi-api-server",
+  "version": "1.0.1",
   "main": "build/index.js",
   "bin": "build/index.js",
   "scripts": {
