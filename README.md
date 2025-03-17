@@ -1,2 +1,187 @@
-# pi-api-mcp-server
-MCP (Model Context Protocol) Server for the PI API
+# PI API MCP Server
+
+A Model Context Protocol (MCP) server that provides tools and resources for interacting with the PI Dashboard API. This server allows Claude and other MCP-compatible AI assistants to access and manage PI Dashboard resources such as categories and charts.
+
+## Project Structure
+
+```
+pi-api-mcp-server/
+├── build/                 # Generated JavaScript output files
+├── node_modules/          # Dependencies (generated)
+├── index.ts               # Main TypeScript source file
+├── package.json           # Project metadata and dependencies
+├── package-lock.json      # Dependency lock file
+├── tsconfig.json          # TypeScript configuration
+└── README.md              # This file
+```
+
+## Installation
+
+### Using npm
+
+~~~bash
+# Install globally
+npm install -g @mingzilla/pi-api-mcp-server
+
+# Or use directly with npx
+npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2"
+~~~
+
+### Local Development
+
+~~~bash
+# Clone the repository
+git clone https://github.com/mingzilla/pi-api-mcp-server.git
+cd pi-api-mcp-server
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Run the server
+npm start
+~~~
+
+## Configuration with Claude for Desktop
+
+To use this MCP server with Claude for Desktop:
+
+1. Open your Claude for Desktop App configuration at:
+    - Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. Add your server configuration:
+
+~~~json
+{
+  "mcpServers": {
+    "pi-api": {
+      "command": "npx",
+      "args": ["-y", "@mingzilla/pi-api-mcp-server", "--api-url", "http://your-pi-api-url.com/pi/api/v2"]
+    }
+  }
+}
+~~~
+
+**Important Note**: If you don't supply the `--api-url` parameter, the tool will prompt you to set the API URL using the `set-api-url` tool before any operations can be performed. This allows for flexible configuration when the URL is not known at startup time.
+
+## Available Tools
+
+### API Configuration
+
+- **set-api-url**: Set the API base URL for all requests
+  ```
+  Set the API URL to http://localhost:8224/pi/api/v2
+  ```
+
+### Authentication
+
+- **authenticate**: Authenticate with the PI API
+- **keep-session-alive**: Keep the current token session alive
+- **logout**: Invalidate the current token and end the session
+- **set-organization**: Set the organization ID for subsequent requests
+
+### Categories
+
+- **list-categories**: List all categories with pagination support
+- **get-category**: Get a category by ID
+- **create-category**: Create a new category
+- **update-category**: Update an existing category
+- **delete-category**: Delete a category
+- **list-category-objects**: List all objects for a specific category
+
+### Charts
+
+- **list-charts**: List all charts with pagination support
+- **get-chart**: Get a chart by ID
+- **delete-chart**: Delete a chart
+- **export-chart**: Export a chart in various formats
+
+## Available Resources
+
+- **auth://status**: Get authentication status
+- **categories://list**: List all categories
+- **categories://{id}**: Get a specific category
+- **categories://{categoryId}/objects**: Get objects for a specific category
+- **charts://list**: List all charts
+- **charts://{id}**: Get a specific chart
+- **charts://{id}/export/{format}**: Export a chart in a specific format
+
+## Available Prompts
+
+- **analyze-categories**: Analyze categories in the dashboard
+- **analyze-charts**: Analyze charts in the dashboard
+- **compare-charts**: Compare data between two charts
+- **category-usage-analysis**: Analyze how categories are being used in charts
+
+## Usage with Claude
+
+Here are some example queries to use with Claude after connecting the server:
+
+### Set the API URL
+```
+Please use the set-api-url tool to set the PI API URL to http://localhost:8224/pi/api/v2
+```
+
+### Authentication
+```
+Please authenticate to the PI API with my username and password.
+```
+
+### Working with Categories
+```
+List all categories in the dashboard.
+```
+
+```
+Get details about category with ID 123.
+```
+
+### Working with Charts
+```
+List all the charts available in the dashboard.
+```
+
+```
+Export chart with ID 456 as a PDF.
+```
+
+### Using Analysis Prompts
+```
+Analyze the categories in the dashboard.
+```
+
+```
+Compare data between charts 123 and 456.
+```
+
+## Development
+
+To contribute to this project:
+
+~~~bash
+# Clone the repository
+git clone https://github.com/mingzilla/pi-api-mcp-server.git
+cd pi-api-mcp-server
+
+# Install dependencies
+npm install
+
+# Make your changes to index.ts
+
+# Build the project
+npm run build
+
+# Test locally
+node build/index.js
+~~~
+
+## License
+
+MIT
+
+## Author
+
+Ming Huang (mingzilla)
