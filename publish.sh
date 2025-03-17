@@ -1,4 +1,6 @@
 #!/bin/bash
+bash -i ./run.sh
+
 set -e
 
 # Colors for terminal output
