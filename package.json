@@ -1,17 +1,29 @@
 {
-  "name": "tool-mcp-pi-api-server",
+  "name": "@mingzilla/pi-api-mcp-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
+  "bin": "build/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x build/index.js",
     "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
-  "keywords": [],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "pi",
+    "dashboard",
+    "api",
+    "claude"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "An MCP server for interacting with the PI Dashboard API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mingzilla/pi-api-mcp-server"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
     "node-fetch": "^3.3.2",
