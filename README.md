@@ -191,27 +191,6 @@ Analyze the categories in the dashboard.
 Compare data between charts 123 and 456.
 ```
 
-## Development
-
-To contribute to this project:
-
-~~~bash
-# Clone the repository
-git clone https://github.com/mingzilla/pi-api-mcp-server.git
-cd pi-api-mcp-server
-
-# Install dependencies
-npm install
-
-# Make your changes to index.ts
-
-# Build the project
-npm run build
-
-# Test locally
-node build/index.js
-~~~
-
 ## License
 
 MIT
