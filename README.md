@@ -262,6 +262,14 @@ Integration with Claude for Desktop:
         "http://localhost:8224/pi/api/v2",
         "--auth-token",
         "XXXXXXXX"
+      ],
+      "autoApprove": [
+        "authenticate",
+        "keep-session-alive",
+        "list-categories",
+        "get-category",
+        "list-charts",
+        "get-chart"
       ]
     }
   }
