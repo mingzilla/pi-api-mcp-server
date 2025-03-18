@@ -55,11 +55,17 @@ Example Output:
       ],
       "disabled": false,
       "autoApprove": [
-        "list_tools"
+        "authenticate",
+        "keep-session-alive",
+        "list-categories",
+        "get-category",
+        "list-charts",
+        "get-chart"
       ]
     }
   }
 }
+
 ```
 
 **Important Note**: If the `--api-url` parameter is not provided at initialization, the server will prompt you to configure the API URL using the `set-api-url` tool before executing any operations. This design enables flexible configuration in environments where the URL is not predetermined at startup.
@@ -233,7 +239,7 @@ Integration with Claude for Desktop:
 - update code -> start local server -> test local server with file path to index.js
 - update readme.md file -> change the mcpServers config section: docker + node + npx
 - ./publish.sh - publish to npm
-- ./dockerBuild.sh -> ./dockerPublish.sh -> test docker config
+- ./dockerBuild.sh -> ./dockerPublish.sh (edit version number to match package.json) -> test docker config
 - push code to github
 
 ## License
