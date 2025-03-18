@@ -229,6 +229,13 @@ Integration with Claude for Desktop:
 }
 ~~~
 
+### Development Check List
+- update code -> start local server -> test local server with file path to index.js
+- update readme.md file -> change the mcpServers config section: docker + node + npx
+- ./publish.sh - publish to npm
+- ./dockerBuild.sh -> ./dockerPublish.sh -> test docker config
+- push code to github
+
 ## License
 
 MIT License
