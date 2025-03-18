@@ -1,9 +1,10 @@
 {
   "name": "@mingzilla/pi-api-mcp-server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "build/index.js",
   "bin": "build/index.js",
   "scripts": {
+    "prepare": "bash -i ./run.sh",
     "build": "tsc && chmod +x build/index.js",
     "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
