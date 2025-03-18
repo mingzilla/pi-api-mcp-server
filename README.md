@@ -2,6 +2,36 @@
 
 A Model Context Protocol (MCP) server that provides tools and resources for interacting with the PI Dashboard API. This server allows Claude and other MCP-compatible AI assistants to access and manage PI Dashboard resources such as categories and charts.
 
+### Make use of PI with MCP
+Here's an example of what you can do with this MCP Server (Once you have it set up).
+
+Firstly
+- you log in by providing the instructions below
+
+```
+start the pi-api server for me
+once it runs fine, set the url to http://your-pi-api-url.com/pi/api/v2
+and then i need to log in using username and password
+and then i want to list 2 charts
+```
+
+Secondly
+- if you have chart 450 as metadata chart
+- then use such a prompt
+
+```
+you can use chart id 450 to get the metadata of the charts, 
+and then get the chart json of 450
+and then find out what chartids are related to claims, 
+and then get the json data of those charts, 
+and then use the data to explain insights
+```
+
+Result
+
+![example-response.png](example-response.png)
+
+
 ## Installation
 
 ### Using npm
@@ -110,35 +140,6 @@ To use this MCP server with Claude for Desktop:
 ## Usage with Claude
 
 Here are some example queries to use with Claude after connecting the server:
-
-
-### Make use of PI
-
-Firstly
-- you log in by providing the instructions below
-
-```
-start the pi-api server for me
-once it runs fine, set the url to http://your-pi-api-url.com/pi/api/v2
-and then i need to log in using username and password
-and then i want to list 2 charts
-```
-
-Secondly
-- if you have chart 450 as metadata chart
-- then use such a prompt
-
-```
-you can use chart id 450 to get the metadata of the charts, 
-and then get the chart json of 450
-and then find out what chartids are related to claims, 
-and then get the json data of those charts, 
-and then use the data to explain insights
-```
-
-Result
-
-![example-response.png](example-response.png)
 
 
 ### Set the API URL
