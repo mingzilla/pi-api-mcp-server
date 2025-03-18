@@ -32,53 +32,9 @@ Result
 ![example-response.png](example-response.png)
 
 
-## Installation
-
-### Using Docker (Recommended)
-
-Go Straight to `MCP Client Config` 
-
-### Using npm
-
-~~~bash
-# Install globally
-npm install -g @mingzilla/pi-api-mcp-server
-
-# Or use directly with npx
-npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2"
-~~~
-
-### Or Run Directly
-
-~~~bash
-# Clone the repository - the below or https://github.com/mingzilla/pi-api-mcp-server.git
-git clone git@github.com:mingzilla/pi-api-mcp-server.git
-cd pi-api-mcp-server
-
-# Install dependencies
-npm install
-./run.sh # global dependencies, so that the mcp client can connect to it with "@mingzilla/pi-api-mcp-server"
-
-# Build the project
-npm run build
-
-# Run the server
-npm start
-~~~
-
-## MCP Client Config - e.g. with Claude for Desktop
-
-To use this MCP server with Claude for Desktop:
-
-### Locate Config File
-Open your Claude for Desktop App configuration at:
-- Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-- Linux: Use other tools for now. e.g. Cline - ask it to show you the MCP config file
-
-### Add your server to MCP Client Config File:
-
-#### Docker (Recommended)
+## Installation - Using Docker (Recommended)
+- No MCP Server Setup
+- Configure MCP Client Config File
 
 ```json
 {
@@ -101,23 +57,14 @@ Open your Claude for Desktop App configuration at:
 }
 ```
 
-#### Node
-- run what's defined in "Run Directly"
-- `./run.sh` needs to be run to ensure dependencies are available
-- then the below would work, "@mingzilla/pi-api-mcp-server" refers to what's run by "Run Directly"
-
-~~~json
-{
-  "mcpServers": {
-    "pi-api": {
-      "command": "npx",
-      "args": ["-y", "@mingzilla/pi-api-mcp-server", "--api-url", "http://your-pi-api-url.com/pi/api/v2"]
-    }
-  }
-}
-~~~
-
 **Important Note**: If you don't supply the `--api-url` parameter, the tool will prompt you to set the API URL using the `set-api-url` tool before any operations can be performed. This allows for flexible configuration when the URL is not known at startup time.
+
+## Locate the Config File
+Open your Claude for Desktop App configuration at:
+- Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- Linux: Use other tools for now. e.g. Cline - ask it to show you the MCP config file
+
 
 ## Available Tools
 
@@ -209,6 +156,59 @@ Analyze the categories in the dashboard.
 ```
 Compare data between charts 123 and 456.
 ```
+
+----
+
+## Development
+
+### Run Directly
+
+~~~bash
+# Clone the repository - the below or https://github.com/mingzilla/pi-api-mcp-server.git
+git clone git@github.com:mingzilla/pi-api-mcp-server.git
+cd pi-api-mcp-server
+
+# Install dependencies
+npm install
+./run.sh # global dependencies, so that the mcp client can connect to it with "@mingzilla/pi-api-mcp-server"
+
+# Build the project
+npm run build
+
+# Run the server
+npm start
+~~~
+
+### Or Installation - Using npm
+
+~~~bash
+# Install globally
+npm install -g @mingzilla/pi-api-mcp-server
+
+# Or use directly with npx
+npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2"
+~~~
+
+### MCP Client Config Settings
+
+To use this MCP server with Claude for Desktop:
+
+#### Node
+- run what's defined in "Run Directly"
+- `./run.sh` needs to be run to ensure dependencies are available
+- then the below would work, "@mingzilla/pi-api-mcp-server" refers to what's run by "Run Directly"
+
+~~~json
+{
+  "mcpServers": {
+    "pi-api": {
+      "command": "npx",
+      "args": ["-y", "@mingzilla/pi-api-mcp-server", "--api-url", "http://your-pi-api-url.com/pi/api/v2"]
+    }
+  }
+}
+~~~
+
 
 ## License
 
