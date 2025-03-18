@@ -24,8 +24,24 @@ LABEL org.opencontainers.image.url="https://github.com/mingzilla/pi-api-mcp-serv
 LABEL org.opencontainers.image.source="https://github.com/mingzilla/pi-api-mcp-server"
 
 # Create an entrypoint script to handle environment variables
-RUN printf '#!/bin/sh\nif [ -n "$API_URL" ]; then\n  exec node build/index.js --api-url "$API_URL"\nelse\n  exec node build/index.js\nfi\n' > entrypoint.sh && \
-    chmod +x entrypoint.sh
+RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
+    echo '' >> /app/entrypoint.sh && \
+    echo '# Base command' >> /app/entrypoint.sh && \
+    echo 'cmd="node build/index.js"' >> /app/entrypoint.sh && \
+    echo '' >> /app/entrypoint.sh && \
+    echo '# Add API URL if provided' >> /app/entrypoint.sh && \
+    echo 'if [ -n "$API_URL" ]; then' >> /app/entrypoint.sh && \
+    echo '  cmd="$cmd --api-url \"$API_URL\""' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    echo '' >> /app/entrypoint.sh && \
+    echo '# Add auth token if provided' >> /app/entrypoint.sh && \
+    echo 'if [ -n "$PI_API_KEY" ]; then' >> /app/entrypoint.sh && \
+    echo '  cmd="$cmd --auth-token \"$PI_API_KEY\""' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    echo '' >> /app/entrypoint.sh && \
+    echo '# Execute the command' >> /app/entrypoint.sh && \
+    echo 'eval exec $cmd' >> /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
 
 # Use the entrypoint script
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

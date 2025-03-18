@@ -19,20 +19,37 @@ const logInfo = (message: string) => {
 function parseArgs() {
   const args = process.argv.slice(2);
   const apiUrlIndex = args.indexOf('--api-url');
+  const authTokenIndex = args.indexOf('--auth-token');
+
+  const result = {
+    apiUrl: null,
+    authToken: null
+  } as any;
 
   if (apiUrlIndex !== -1 && apiUrlIndex + 1 < args.length) {
-    return args[apiUrlIndex + 1];
+    result.apiUrl = args[apiUrlIndex + 1];
   }
 
-  return null;
+  if (authTokenIndex !== -1 && authTokenIndex + 1 < args.length) {
+    result.authToken = args[authTokenIndex + 1];
+  }
+
+  return result;
 }
 
-// Extract API URL from command line
-let API_BASE_URL = parseArgs();
+// Extract command line arguments
+const cmdArgs = parseArgs();
+let API_BASE_URL = cmdArgs.apiUrl;
 logInfo(`Command line API URL: ${API_BASE_URL || 'not provided'}`);
 
-// Global token storage
+// Set auth token if provided via command line
 let authToken: string | null = null;
+if (cmdArgs.authToken) {
+  authToken = cmdArgs.authToken;
+  logInfo("Auth token provided via command line");
+}
+
+// Global token storage
 let orgId: number | null = null;
 let apiUrlSet: boolean = !!API_BASE_URL;
 

@@ -10,7 +10,7 @@ Initial Authentication:
 
 ```
 Ensure the PI API MCP server is running
-Set the API URL to http://your-pi-api-url.com/pi/api/v2
+Set the API URL to http://localhost:8224/pi/api/v2
 Authenticate using your username and password credentials
 List two charts from the dashboard
 ```
@@ -44,8 +44,9 @@ Example Output:
         "run",
         "-i",
         "--rm",
-        "-e", "API_URL=http://your-pi-api-url.com",
-        "mingzilla/pi-api-mcp-server:latest"
+        "-e", "API_URL=http://localhost:8224/pi/api/v2",
+        "-e", "PI_API_KEY=XXXXXXXX",
+        "mingzilla/pi-api-mcp-server"
       ],
       "disabled": false,
       "autoApprove": [
@@ -185,7 +186,7 @@ npm start
 npm install -g @mingzilla/pi-api-mcp-server
 
 # Direct execution via npx
-npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2"
+npx @mingzilla/pi-api-mcp-server --api-url "http://localhost:8224/pi/api/v2" --auth-token "XXXXXXXX"
 ~~~
 
 ### MCP Client Configuration
@@ -202,7 +203,14 @@ Integration with Claude for Desktop:
   "mcpServers": {
     "pi-api": {
       "command": "npx",
-      "args": ["-y", "@mingzilla/pi-api-mcp-server", "--api-url", "http://your-pi-api-url.com/pi/api/v2"]
+      "args": [
+        "-y",
+        "@mingzilla/pi-api-mcp-server",
+        "--api-url",
+        "http://localhost:8224/pi/api/v2",
+        "--auth-token",
+        "XXXXXXXX"
+      ]
     }
   }
 }
