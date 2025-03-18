@@ -1,13 +1,14 @@
 {
   "name": "@mingzilla/pi-api-mcp-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "build/index.js",
   "bin": "build/index.js",
   "scripts": {
     "prepare": "bash -i ./dependencies.sh",
     "build": "tsc && chmod +x build/index.js",
     "start": "node build/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc --watch"
   },
   "type": "module",
   "keywords": [
@@ -25,7 +26,7 @@
     "type": "git",
     "url": "https://github.com/mingzilla/pi-api-mcp-server"
   },
-  "devDependencies": {
+  "dependencies": {
     "@modelcontextprotocol/sdk": "^1.7.0",
     "@types/node": "^20.17.24",
     "node-fetch": "^3.3.2",
