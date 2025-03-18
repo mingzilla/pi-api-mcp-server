@@ -36,6 +36,7 @@ cd pi-api-mcp-server
 
 # Install dependencies
 npm install
+./run.sh # global dependencies, so that the mcp client can connect to it with "@mingzilla/pi-api-mcp-server"
 
 # Build the project
 npm run build
@@ -53,6 +54,9 @@ To use this MCP server with Claude for Desktop:
     - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 2. Add your server configuration:
+- run what's defined in "Local Development"
+- `./run.sh` needs to be run to ensure dependencies are available
+- then the below would work, "@mingzilla/pi-api-mcp-server" refers to what's run by "Local Development"
 
 ~~~json
 {
