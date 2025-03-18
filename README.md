@@ -124,6 +124,36 @@ To use this MCP server with Claude for Desktop:
 
 Here are some example queries to use with Claude after connecting the server:
 
+
+### Make use of PI
+
+Firstly
+- you log in by providing the instructions below
+
+```
+start the pi-api server for me
+once it runs fine, set the url to http://your-pi-api-url.com/pi/api/v2
+and then i need to log in using username and password
+and then i want to list 2 charts
+```
+
+Secondly
+- if you have chart 450 as metadata chart
+- then use such a prompt
+
+```
+you can use chart id 450 to get the metadata of the charts, 
+and then get the chart json of 450
+and then find out what chartids are related to claims, 
+and then get the json data of those charts, 
+and then use the data to explain insights
+```
+
+Result
+
+![example-response.png](example-response.png)
+
+
 ### Set the API URL
 ```
 Please use the set-api-url tool to set the PI API URL to http://localhost:8224/pi/api/v2
