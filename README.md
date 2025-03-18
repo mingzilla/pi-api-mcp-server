@@ -1,5 +1,7 @@
 # PI API MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
+
 A Model Context Protocol (MCP) server that provides standardized tools and resources for interacting with the PI Dashboard API. This implementation enables Claude and other MCP-compatible AI assistants to securely access and manage PI Dashboard resources, including categories and charts.
 
 ### Utilizing PI with MCP
@@ -32,6 +34,16 @@ Analyze the data to generate actionable insights
 Example Output:
 
 ![example-response.png](example-response.png)
+
+## Installation
+
+### Installing via Smithery
+
+To install pi-api-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@mingzilla/pi-api-mcp-server):
+
+```bash
+npx -y @smithery/cli install @mingzilla/pi-api-mcp-server --client claude
+```
 
 ## Installation - Using Docker (Recommended)
 

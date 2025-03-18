@@ -1,0 +1,24 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - apiUrl
+    properties:
+      apiUrl:
+        type: string
+        description: The base API URL for the PI Dashboard API.
+      authToken:
+        type: string
+        description: Optional authentication token if required.
+    description: Configuration for starting the PI API MCP Server.
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => { const args = ['build/index.js', '--api-url', config.apiUrl]; if (config.authToken) { args.push('--auth-token', config.authToken); } return { command: 'node', args }; }
+  exampleConfig:
+    apiUrl: http://localhost:8224/pi/api/v2
+    authToken: YOUR_PI_API_KEY
