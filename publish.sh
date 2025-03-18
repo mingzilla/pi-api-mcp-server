@@ -1,5 +1,5 @@
 #!/bin/bash
-bash -i ./run.sh
+bash -i ./dependencies.sh
 
 set -e
 

@@ -3,9 +3,11 @@
 A Model Context Protocol (MCP) server that provides standardized tools and resources for interacting with the PI Dashboard API. This implementation enables Claude and other MCP-compatible AI assistants to securely access and manage PI Dashboard resources, including categories and charts.
 
 ### Utilizing PI with MCP
+
 The following demonstrates typical usage scenarios for this MCP Server after setup completion.
 
 Initial Authentication:
+
 - Execute the following instructions to establish a connection:
 
 ```
@@ -16,6 +18,7 @@ List two charts from the dashboard
 ```
 
 Chart Analysis:
+
 - If chart ID 450 contains metadata information, use the following prompt:
 
 ```
@@ -30,8 +33,8 @@ Example Output:
 
 ![example-response.png](example-response.png)
 
-
 ## Installation - Using Docker (Recommended)
+
 - No MCP Server configuration needed
 - MCP client configuration file setup:
 
@@ -44,8 +47,10 @@ Example Output:
         "run",
         "-i",
         "--rm",
-        "-e", "API_URL=http://localhost:8224/pi/api/v2",
-        "-e", "PI_API_KEY=XXXXXXXX",
+        "-e",
+        "API_URL=http://localhost:8224/pi/api/v2",
+        "-e",
+        "PI_API_KEY=XXXXXXXX",
         "mingzilla/pi-api-mcp-server"
       ],
       "disabled": false,
@@ -60,11 +65,12 @@ Example Output:
 **Important Note**: If the `--api-url` parameter is not provided at initialization, the server will prompt you to configure the API URL using the `set-api-url` tool before executing any operations. This design enables flexible configuration in environments where the URL is not predetermined at startup.
 
 ## Configuration File Location
+
 Access your Claude for Desktop application configuration at:
+
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 - Linux: Use other tools for now. e.g. Cline - ask it to show you the MCP config file
-
 
 ## Available Tools
 
@@ -119,18 +125,20 @@ Access your Claude for Desktop application configuration at:
 
 Here are some example queries to use with Claude after connecting the server:
 
-
 ### Set the API URL
+
 ```
 Please use the set-api-url tool to set the PI API URL to http://localhost:8224/pi/api/v2
 ```
 
 ### Authentication
+
 ```
 Please authenticate to the PI API with my username and password.
 ```
 
 ### Working with Categories
+
 ```
 List all categories in the dashboard.
 ```
@@ -140,6 +148,7 @@ Get details about category with ID 123.
 ```
 
 ### Working with Charts
+
 ```
 List all the charts available in the dashboard.
 ```
@@ -149,6 +158,7 @@ Export chart with ID 456 as a PDF.
 ```
 
 ### Using Analysis Prompts
+
 ```
 Analyze the categories in the dashboard.
 ```
@@ -163,6 +173,8 @@ Compare data between charts 123 and 456.
 
 ### Local Execution
 
+- Note: you can make use of `start.sh` to run the dev server as well.
+
 ~~~bash
 # Clone the repository (SSH or HTTPS option)
 git clone git@github.com:mingzilla/pi-api-mcp-server.git
@@ -170,7 +182,7 @@ cd pi-api-mcp-server
 
 # Install dependencies
 npm install
-./run.sh # Installs global dependencies to enable MCP client connection via "@mingzilla/pi-api-mcp-server"
+./dependencies.sh # Installs global dependencies to enable MCP client connection via "@mingzilla/pi-api-mcp-server"
 
 # Build the project
 npm run build
@@ -194,8 +206,9 @@ npx @mingzilla/pi-api-mcp-server --api-url "http://localhost:8224/pi/api/v2" --a
 Integration with Claude for Desktop:
 
 #### Node.js Implementation
+
 - Execute the instructions in the "Local Execution" section
-- Ensure `./run.sh` has been executed to install required dependencies
+- Ensure `./dependencies.sh` has been executed to install required dependencies
 - Implement the following configuration (Note: "@mingzilla/pi-api-mcp-server" references the package installed through "Local Execution")
 
 ~~~json
@@ -215,7 +228,6 @@ Integration with Claude for Desktop:
   }
 }
 ~~~
-
 
 ## License
 

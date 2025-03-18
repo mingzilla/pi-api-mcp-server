@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy package files, tsconfig, and source
 COPY package.json tsconfig.json index.ts ./
 
-# Remove the prepare script that depends on run.sh
+# Remove the prepare script that depends on dependencies.sh
 RUN sed -i '/prepare/d' package.json
 
 # Install all dependencies (dev dependencies are actually runtime dependencies here)
