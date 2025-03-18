@@ -9,8 +9,8 @@ Firstly
 - you log in by providing the instructions below
 
 ```
-start the pi-api server for me
-once it runs fine, set the url to http://your-pi-api-url.com/pi/api/v2
+make sure the pi-api server is running
+set the url for pi-api to http://your-pi-api-url.com/pi/api/v2
 and then i need to log in using username and password
 and then i want to list 2 charts
 ```
@@ -33,6 +33,10 @@ Result
 
 
 ## Installation
+
+### Using Docker (Recommended)
+
+Go Straight to `MCP Client Config` 
 
 ### Using npm
 
@@ -62,15 +66,42 @@ npm run build
 npm start
 ~~~
 
-## Configuration with Claude for Desktop
+## MCP Client Config - e.g. with Claude for Desktop
 
 To use this MCP server with Claude for Desktop:
 
-1. Open your Claude for Desktop App configuration at:
-    - Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
-    - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+### Locate Config File
+Open your Claude for Desktop App configuration at:
+- Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- Linux: Use other tools for now. e.g. Cline - ask it to show you the MCP config file
 
-2. Add your server configuration:
+### Add your server to MCP Client Config File:
+
+#### Docker (Recommended)
+
+```json
+{
+  "mcpServers": {
+    "pi-api": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e", "API_URL=http://your-pi-api-url.com",
+        "mingzilla/pi-api-mcp-server:latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "list_tools"
+      ]
+    }
+  }
+}
+```
+
+#### Node
 - run what's defined in "Run Directly"
 - `./run.sh` needs to be run to ensure dependencies are available
 - then the below would work, "@mingzilla/pi-api-mcp-server" refers to what's run by "Run Directly"
