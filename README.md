@@ -1,40 +1,39 @@
 # PI API MCP Server
 
-A Model Context Protocol (MCP) server that provides tools and resources for interacting with the PI Dashboard API. This server allows Claude and other MCP-compatible AI assistants to access and manage PI Dashboard resources such as categories and charts.
+A Model Context Protocol (MCP) server that provides standardized tools and resources for interacting with the PI Dashboard API. This implementation enables Claude and other MCP-compatible AI assistants to securely access and manage PI Dashboard resources, including categories and charts.
 
-### Make use of PI with MCP
-Here's an example of what you can do with this MCP Server (Once you have it set up).
+### Utilizing PI with MCP
+The following demonstrates typical usage scenarios for this MCP Server after setup completion.
 
-Firstly
-- you log in by providing the instructions below
-
-```
-make sure the pi-api server is running
-set the url for pi-api to http://your-pi-api-url.com/pi/api/v2
-and then i need to log in using username and password
-and then i want to list 2 charts
-```
-
-Secondly
-- if you have chart 450 as metadata chart
-- then use such a prompt
+Initial Authentication:
+- Execute the following instructions to establish a connection:
 
 ```
-you can use chart id 450 to get the metadata of the charts, 
-and then get the chart json of 450
-and then find out what chartids are related to claims, 
-and then get the json data of those charts, 
-and then use the data to explain insights
+Ensure the PI API MCP server is running
+Set the API URL to http://your-pi-api-url.com/pi/api/v2
+Authenticate using your username and password credentials
+List two charts from the dashboard
 ```
 
-Result
+Chart Analysis:
+- If chart ID 450 contains metadata information, use the following prompt:
+
+```
+Retrieve the metadata from chart ID 450
+Extract the chart JSON data from ID 450
+Identify chart IDs associated with claims
+Obtain JSON data for the identified charts
+Analyze the data to generate actionable insights
+```
+
+Example Output:
 
 ![example-response.png](example-response.png)
 
 
 ## Installation - Using Docker (Recommended)
-- No MCP Server Setup
-- Configure MCP Client Config File
+- No MCP Server configuration needed
+- MCP client configuration file setup:
 
 ```json
 {
@@ -57,11 +56,11 @@ Result
 }
 ```
 
-**Important Note**: If you don't supply the `--api-url` parameter, the tool will prompt you to set the API URL using the `set-api-url` tool before any operations can be performed. This allows for flexible configuration when the URL is not known at startup time.
+**Important Note**: If the `--api-url` parameter is not provided at initialization, the server will prompt you to configure the API URL using the `set-api-url` tool before executing any operations. This design enables flexible configuration in environments where the URL is not predetermined at startup.
 
-## Locate the Config File
-Open your Claude for Desktop App configuration at:
-- Mac: `~/Library/Application Support/Claude/claude_desktop_config.json`
+## Configuration File Location
+Access your Claude for Desktop application configuration at:
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 - Linux: Use other tools for now. e.g. Cline - ask it to show you the MCP config file
 
@@ -70,7 +69,7 @@ Open your Claude for Desktop App configuration at:
 
 ### API Configuration
 
-- **set-api-url**: Set the API base URL for all requests
+- **set-api-url**: Configure the base API URL for all requests
   ```
   Set the API URL to http://localhost:8224/pi/api/v2
   ```
@@ -115,7 +114,7 @@ Open your Claude for Desktop App configuration at:
 - **compare-charts**: Compare data between two charts
 - **category-usage-analysis**: Analyze how categories are being used in charts
 
-## Usage with Claude
+## Claude Integration Examples
 
 Here are some example queries to use with Claude after connecting the server:
 
@@ -161,42 +160,42 @@ Compare data between charts 123 and 456.
 
 ## Development
 
-### Run Directly
+### Local Execution
 
 ~~~bash
-# Clone the repository - the below or https://github.com/mingzilla/pi-api-mcp-server.git
+# Clone the repository (SSH or HTTPS option)
 git clone git@github.com:mingzilla/pi-api-mcp-server.git
 cd pi-api-mcp-server
 
 # Install dependencies
 npm install
-./run.sh # global dependencies, so that the mcp client can connect to it with "@mingzilla/pi-api-mcp-server"
+./run.sh # Installs global dependencies to enable MCP client connection via "@mingzilla/pi-api-mcp-server"
 
 # Build the project
 npm run build
 
-# Run the server
+# Execute the server
 npm start
 ~~~
 
-### Or Installation - Using npm
+### NPM Installation
 
 ~~~bash
-# Install globally
+# Global installation
 npm install -g @mingzilla/pi-api-mcp-server
 
-# Or use directly with npx
+# Direct execution via npx
 npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2"
 ~~~
 
-### MCP Client Config Settings
+### MCP Client Configuration
 
-To use this MCP server with Claude for Desktop:
+Integration with Claude for Desktop:
 
-#### Node
-- run what's defined in "Run Directly"
-- `./run.sh` needs to be run to ensure dependencies are available
-- then the below would work, "@mingzilla/pi-api-mcp-server" refers to what's run by "Run Directly"
+#### Node.js Implementation
+- Execute the instructions in the "Local Execution" section
+- Ensure `./run.sh` has been executed to install required dependencies
+- Implement the following configuration (Note: "@mingzilla/pi-api-mcp-server" references the package installed through "Local Execution")
 
 ~~~json
 {
@@ -212,7 +211,7 @@ To use this MCP server with Claude for Desktop:
 
 ## License
 
-MIT
+MIT License
 
 ## Author
 
