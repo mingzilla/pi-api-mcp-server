@@ -30,8 +30,8 @@ npx @mingzilla/pi-api-mcp-server --api-url "http://your-pi-api-url.com/pi/api/v2
 ### Or Run Directly
 
 ~~~bash
-# Clone the repository
-git clone https://github.com/mingzilla/pi-api-mcp-server.git
+# Clone the repository - the below or https://github.com/mingzilla/pi-api-mcp-server.git
+git clone git@github.com:mingzilla/pi-api-mcp-server.git
 cd pi-api-mcp-server
 
 # Install dependencies
