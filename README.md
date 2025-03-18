@@ -2,19 +2,6 @@
 
 A Model Context Protocol (MCP) server that provides tools and resources for interacting with the PI Dashboard API. This server allows Claude and other MCP-compatible AI assistants to access and manage PI Dashboard resources such as categories and charts.
 
-## Project Structure
-
-```
-pi-api-mcp-server/
-├── build/                 # Generated JavaScript output files
-├── node_modules/          # Dependencies (generated)
-├── index.ts               # Main TypeScript source file
-├── package.json           # Project metadata and dependencies
-├── package-lock.json      # Dependency lock file
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # This file
-```
-
 ## Installation
 
 ### Using npm
