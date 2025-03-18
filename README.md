@@ -229,11 +229,45 @@ Integration with Claude for Desktop:
         "http://localhost:8224/pi/api/v2",
         "--auth-token",
         "XXXXXXXX"
+      ],
+      "autoApprove": [
+        "authenticate",
+        "keep-session-alive",
+        "list-categories",
+        "get-category",
+        "list-charts",
+        "get-chart"
       ]
     }
   }
 }
 ~~~
+
+### Local Development
+- run the server using `./start.sh`
+- set the config with the path to the `build/index.js` file
+
+```shell
+./start.sh
+```
+
+~~~json
+{
+  "mcpServers": {
+    "pi-api": {
+      "command": "node",
+      "args": [
+        "/home/mingzilla/dev/tool-mcp-pi-api-server/build/index.js",
+        "--api-url",
+        "http://localhost:8224/pi/api/v2",
+        "--auth-token",
+        "XXXXXXXX"
+      ]
+    }
+  }
+}
+~~~
+
 
 ### Development Check List
 - update code -> start local server -> test local server with file path to index.js
