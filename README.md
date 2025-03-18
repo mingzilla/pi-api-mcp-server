@@ -303,3 +303,5 @@ MIT License
 ## Author
 
 Ming Huang (mingzilla)
+
+[![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
