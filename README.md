@@ -15,7 +15,8 @@ Initial Authentication:
 ```
 Ensure the PI API MCP server is running
 Set the API URL to http://localhost:8224/pi/api/v2
-Authenticate using your username and password credentials
+Use the authenticate tool for authentication guidance
+Check the connection status to verify everything is working
 List two charts from the dashboard
 ```
 
@@ -67,12 +68,14 @@ npx -y @smithery/cli install @mingzilla/pi-api-mcp-server --client claude
       ],
       "disabled": false,
       "autoApprove": [
-        "authenticate",
         "keep-session-alive",
+        "check-connection",
+        "authenticate",
         "list-categories",
         "get-category",
-        "list-charts",
-        "get-chart"
+        "list-charts", 
+        "get-chart",
+        "export-chart"
       ]
     }
   }
@@ -92,8 +95,9 @@ Access your Claude for Desktop application configuration at:
 
 ## Available Tools
 
-### API Configuration
+### Connection Management
 
+- **check-connection**: Check if the current API URL and authentication are valid
 - **set-api-url**: Configure the base API URL for all requests
   ```
   Set the API URL to http://localhost:8224/pi/api/v2
@@ -101,8 +105,9 @@ Access your Claude for Desktop application configuration at:
 
 ### Authentication
 
-- **authenticate**: Authenticate with the PI API
-- **keep-session-alive**: Keep the current token session alive
+- **authenticate**: Get guidance on authentication options
+- **authenticate-with-credentials**: Authenticate with username and password (last resort option)
+- **keep-session-alive**: Verify and refresh the current authentication token (also used for token-based authentication)
 - **logout**: Invalidate the current token and end the session
 - **set-organization**: Set the organization ID for subsequent requests
 
@@ -152,7 +157,15 @@ Please use the set-api-url tool to set the PI API URL to http://localhost:8224/p
 ### Authentication
 
 ```
-Please authenticate to the PI API with my username and password.
+Please help me authenticate to the PI API.
+```
+
+```
+I have a token. Please use the keep-session-alive tool with my token: [YOUR_TOKEN_HERE]
+```
+
+```
+Please check if my connection to the PI API is working properly.
 ```
 
 ### Working with Categories
@@ -243,12 +256,14 @@ Integration with Claude for Desktop:
         "XXXXXXXX"
       ],
       "autoApprove": [
-        "authenticate",
         "keep-session-alive",
+        "check-connection",
+        "authenticate",
         "list-categories",
         "get-category",
         "list-charts",
-        "get-chart"
+        "get-chart",
+        "export-chart"
       ]
     }
   }
@@ -276,12 +291,14 @@ Integration with Claude for Desktop:
         "XXXXXXXX"
       ],
       "autoApprove": [
-        "authenticate",
         "keep-session-alive",
+        "check-connection",
+        "authenticate",
         "list-categories",
         "get-category",
         "list-charts",
-        "get-chart"
+        "get-chart",
+        "export-chart"
       ]
     }
   }
