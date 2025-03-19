@@ -75,7 +75,8 @@ npx -y @smithery/cli install @mingzilla/pi-api-mcp-server --client claude
         "get-category",
         "list-charts", 
         "get-chart",
-        "export-chart"
+        "export-chart",
+        "get-filterable-attributes"
       ]
     }
   }
@@ -95,6 +96,12 @@ Access your Claude for Desktop application configuration at:
 
 ## Available Tools
 
+### Schema Discovery
+- **get-filterable-attributes**: Get the list of attributes that can be used for filtering by examining a sample entity
+  ```
+  Get the filterable attributes for chart entities
+  ```
+
 ### Connection Management
 
 - **check-connection**: Check if the current API URL and authentication are valid
@@ -113,7 +120,7 @@ Access your Claude for Desktop application configuration at:
 
 ### Categories
 
-- **list-categories**: List all categories with pagination support
+- **list-categories**: List all categories with filtering support
 - **get-category**: Get a category by ID
 - **create-category**: Create a new category
 - **update-category**: Update an existing category
@@ -122,7 +129,7 @@ Access your Claude for Desktop application configuration at:
 
 ### Charts
 
-- **list-charts**: List all charts with pagination support
+- **list-charts**: List all charts with filtering support
 - **get-chart**: Get a chart by ID
 - **delete-chart**: Delete a chart
 - **export-chart**: Export a chart in various formats
@@ -143,6 +150,7 @@ Access your Claude for Desktop application configuration at:
 - **analyze-charts**: Analyze charts in the dashboard
 - **compare-charts**: Compare data between two charts
 - **category-usage-analysis**: Analyze how categories are being used in charts
+- **use-filters**: Shows how to use filters effectively with this API
 
 ## Claude Integration Examples
 
@@ -188,6 +196,16 @@ List all the charts available in the dashboard.
 Export chart with ID 456 as a PDF.
 ```
 
+### Using Filters
+
+```
+Get the filterable attributes for chart entities to understand what fields I can filter on.
+```
+
+```
+List charts with description containing "revenue" using the filter option.
+```
+
 ### Using Analysis Prompts
 
 ```
@@ -196,6 +214,10 @@ Analyze the categories in the dashboard.
 
 ```
 Compare data between charts 123 and 456.
+```
+
+```
+Show me how to use filters effectively with this API.
 ```
 
 ----
@@ -263,7 +285,8 @@ Integration with Claude for Desktop:
         "get-category",
         "list-charts",
         "get-chart",
-        "export-chart"
+        "export-chart",
+        "get-filterable-attributes"
       ]
     }
   }
@@ -298,7 +321,8 @@ Integration with Claude for Desktop:
         "get-category",
         "list-charts",
         "get-chart",
-        "export-chart"
+        "export-chart",
+        "get-filterable-attributes"
       ]
     }
   }
