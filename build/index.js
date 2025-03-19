@@ -1,10 +1,9 @@
 #!/usr/bin/env node
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import {McpServer, ResourceTemplate} from "@modelcontextprotocol/sdk/server/mcp.js";
+import {StdioServerTransport} from "@modelcontextprotocol/sdk/server/stdio.js";
+import {z} from "zod";
 import fetch from "node-fetch";
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 // Logging
 const logError = (message) => {
     console.error(`ERROR: ${message}`);
@@ -102,10 +101,7 @@ async function authenticatedRequest(endpoint, method = "GET", body = null, query
             logInfo(`Received JSON response: ${JSON.stringify(jsonData).substring(0, 200)}...`);
             return jsonData;
         }
-        else if (contentType.includes("text/csv") ||
-            contentType.includes("application/pdf") ||
-            contentType.includes("image/") ||
-            contentType.includes("application/vnd.openxmlformats")) {
+        else if (contentType.includes("text/csv")) {
             // For binary/file responses, return a base64 encoded string
             const buffer = await response.arrayBuffer();
             const base64 = Buffer.from(buffer).toString("base64");
@@ -127,6 +123,23 @@ async function authenticatedRequest(endpoint, method = "GET", body = null, query
         throw error;
     }
 }
+// Helper function to process filter strings into query parameters
+function parseFilters(filterString) {
+    const queryParams = {};
+    if (!filterString)
+        return queryParams;
+    // Split by & to handle multiple filters
+    const filters = filterString.split('&');
+    for (const filter of filters) {
+        // Match the pattern fieldName(operator)=value
+        const match = filter.match(/([a-zA-Z]+)\(([a-zA-Z]+)\)=(.+)/);
+        if (match) {
+            const [_, field, operator, value] = match;
+            queryParams[`${field}(${operator})`] = value;
+        }
+    }
+    return queryParams;
+}
 // Helper function to verify connection status
 async function verifyConnection() {
     if (!apiUrlSet || !API_BASE_URL) {
@@ -147,6 +160,103 @@ async function verifyConnection() {
         return false;
     }
 }
+//
+// SCHEMA DISCOVERY TOOL
+//
+server.tool("get-filterable-attributes", "Get the list of attributes that can be used for filtering by examining a sample entity", {
+    entityType: z.enum(["chart", "category"]).describe("Type of entity to examine (chart or category)")
+}, async ({ entityType }) => {
+    try {
+        if (!apiUrlSet || !authToken) {
+            return {
+                isError: true,
+                content: [{
+                        type: "text",
+                        text: "Please set API URL and authenticate before using this tool."
+                    }]
+            };
+        }
+        let endpoint = "";
+        // Get a sample entity
+        if (entityType === "chart") {
+            endpoint = "/charts";
+        }
+        else if (entityType === "category") {
+            endpoint = "/categories";
+        }
+        // Get all entities (since pagination may not be supported)
+        const listResponse = await authenticatedRequest(endpoint, "GET");
+        if (listResponse &&
+            typeof listResponse === 'object' &&
+            'content' in listResponse &&
+            Array.isArray(listResponse.content) &&
+            listResponse.content.length > 0) {
+            // Just use the first entity as our sample
+            const sampleEntity = listResponse.content[0];
+            // Extract the attributes from the sample entity
+            const attributes = Object.keys(sampleEntity).map(key => {
+                const value = sampleEntity[key];
+                const type = typeof value;
+                // Determine which operators are suitable based on the value type
+                let availableOperators = [];
+                if (type === "string") {
+                    // Prioritize 'like' for string fields since it's case-insensitive
+                    availableOperators = ["like", "nlike", "eq", "ne"];
+                }
+                else if (type === "number") {
+                    availableOperators = ["eq", "ne", "gt", "lt", "ge", "le"];
+                }
+                else if (type === "boolean") {
+                    availableOperators = ["eq", "ne"];
+                }
+                return {
+                    name: key,
+                    type: type,
+                    example: value !== null && value !== undefined ? String(value).substring(0, 30) : "null", // Show a sample value (truncated)
+                    operators: availableOperators
+                };
+            });
+            // Find a string field for the example if possible
+            const stringField = attributes.find(attr => attr.type === "string" && attr.example && attr.example !== "null");
+            let exampleFilter = "";
+            if (stringField) {
+                exampleFilter = `${stringField.name}(like)=${stringField.example}`;
+            }
+            else if (attributes.length > 0) {
+                const firstAttr = attributes[0];
+                exampleFilter = `${firstAttr.name}(${firstAttr.operators[0]})=${firstAttr.example}`;
+            }
+            let exampleMultipleFilter = "";
+            if (attributes.length > 1) {
+                const secondAttr = attributes[1];
+                exampleMultipleFilter = `${exampleFilter}&${secondAttr.name}(${secondAttr.operators[0]})=${secondAttr.example}`;
+            }
+            return {
+                content: [{
+                        type: "text",
+                        text: `Filterable attributes for ${entityType}:\n${JSON.stringify(attributes, null, 2)}\n\n` +
+                            `Example filter usage: '${exampleFilter}'\n\n` +
+                            `Example with multiple filters: '${exampleMultipleFilter || "Not enough attributes for multiple filter example"}'\n\n` +
+                            `Note: For text fields, the 'like' operator is recommended as it performs case-insensitive substring matching.`
+                    }]
+            };
+        }
+        else {
+            return {
+                content: [{
+                        type: "text",
+                        text: `No ${entityType} entities found to analyze. Please ensure there is at least one ${entityType} in the system.`
+                    }]
+            };
+        }
+    }
+    catch (error) {
+        return {
+            isError: true,
+            content: [{ type: "text", text: `Error fetching ${entityType} attributes: ${getErrorMessage(error)}` }]
+        };
+    }
+});
 //
 // CONNECTION STATUS TOOL
 //
@@ -483,24 +593,21 @@ server.tool("set-organization", "Set the organization ID for subsequent requests
 //
 // CATEGORY TOOLS
 //
-// List Categories tool
-server.tool("list-categories", "List all categories with pagination support", {
-    filter: z.string().optional().describe("Optional filter for categories (e.g., 'description(eq)=Marketing')"),
+// List Categories tool (enhanced for better filter support)
+server.tool("list-categories", "List all categories with filtering support", {
+    filter: z.string().optional().describe("Filter criteria in the format 'fieldName(operator)=value'. Multiple filters can be combined with & (e.g., 'description(like)=dashboard&orgId(eq)=1'). Available operators: eq, ne, gt, lt, ge, le, like, nlike. Use get-filterable-attributes tool to see available fields."),
     page: z.number().optional().default(1).describe("Page number for pagination"),
     pageSize: z.number().optional().default(20).describe("Number of items per page")
 }, async ({ filter, page, pageSize }) => {
     try {
-        const queryParams = {
+        let queryParams = {
             page: page.toString(),
             pageSize: pageSize.toString()
         };
+        // Parse and add filter parameters
         if (filter) {
-            // Parse the filter string to extract the field name, operator, and value
-            const match = filter.match(/([a-zA-Z]+)\(([a-zA-Z]+)\)=(.+)/);
-            if (match) {
-                const [_, field, operator, value] = match;
-                queryParams[`${field}(${operator})`] = value;
-            }
+            const filterParams = parseFilters(filter);
+            queryParams = { ...queryParams, ...filterParams };
         }
         const categories = await authenticatedRequest("/categories", "GET", null, queryParams);
         return {
@@ -653,24 +760,21 @@ server.tool("list-category-objects", "List all objects for a specific category",
 //
 // CHART TOOLS
 //
-// List Charts tool
-server.tool("list-charts", "List all charts with pagination support", {
-    filter: z.string().optional().describe("Optional filter for charts"),
+// List Charts tool (enhanced for better filter support)
+server.tool("list-charts", "List all charts with filtering support", {
+    filter: z.string().optional().describe("Filter criteria in the format 'fieldName(operator)=value'. Multiple filters can be combined with & (e.g., 'description(like)=revenue&categoryId(eq)=5'). Available operators: eq, ne, gt, lt, ge, le, like, nlike. Use get-filterable-attributes tool to see available fields."),
     page: z.number().optional().default(1).describe("Page number for pagination"),
     pageSize: z.number().optional().default(20).describe("Number of items per page")
 }, async ({ filter, page, pageSize }) => {
     try {
-        const queryParams = {
+        let queryParams = {
             page: page.toString(),
             pageSize: pageSize.toString()
         };
+        // Parse and add filter parameters
         if (filter) {
-            // Parse the filter string to extract the field name, operator, and value
-            const match = filter.match(/([a-zA-Z]+)\(([a-zA-Z]+)\)=(.+)/);
-            if (match) {
-                const [_, field, operator, value] = match;
-                queryParams[`${field}(${operator})`] = value;
-            }
+            const filterParams = parseFilters(filter);
+            queryParams = { ...queryParams, ...filterParams };
         }
         const charts = await authenticatedRequest("/charts", "GET", null, queryParams);
         return {
@@ -730,7 +834,7 @@ server.tool("delete-chart", "Delete a chart", {
 // Export Chart tool
 server.tool("export-chart", "Export a chart in various formats", {
     id: z.number().describe("Chart ID"),
-    format: z.enum(["csv", "docx", "xlsx", "jpeg", "json", "png", "pdf", "pptx"]).describe("Export format")
+    format: z.enum(["json", "csv"]).describe("Export format")
 }, async ({ id, format }) => {
     try {
         const result = await authenticatedRequest(`/charts/${id}/${format}`);
@@ -1110,6 +1214,30 @@ server.prompt("category-usage-analysis", "Analyze how categories are being used 
      * Categories with no associated charts
      * Distribution of chart types within each category
    - Recommend potential reorganization of categories or charts to improve dashboard structure`
+                }
+            }]
+    };
+});
+// Enhanced prompt for using filtering efficiently
+server.prompt("use-filters", "Shows how to use filters effectively with this API", {}, async () => {
+    return {
+        messages: [{
+                role: "user",
+                content: {
+                    type: "text",
+                    text: `Please demonstrate how to use filtering effectively with this API.
+
+1. First, use the get-filterable-attributes tool for both 'chart' and 'category' to understand what attributes can be filtered on
+
+2. Provide examples of common filtering scenarios:
+   - Using the 'like' operator for text search (preferred for case-insensitive substring matching)
+   - Using numeric comparisons with gt, lt, etc.
+   - Combining multiple filters 
+   
+3. Create practical examples of list-charts and list-categories with filters that:
+   - Find charts with specific text in their descriptions
+   - Find categories with specific attributes
+   - Demonstrate how to narrow results with multiple criteria`
                 }
             }]
     };
