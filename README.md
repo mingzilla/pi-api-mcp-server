@@ -76,7 +76,8 @@ npx -y @smithery/cli install @mingzilla/pi-api-mcp-server --client claude
         "list-charts", 
         "get-chart",
         "export-chart",
-        "get-filterable-attributes"
+        "get-filterable-attributes",
+        "export-chart"
       ]
     }
   }
@@ -286,7 +287,8 @@ Integration with Claude for Desktop:
         "list-charts",
         "get-chart",
         "export-chart",
-        "get-filterable-attributes"
+        "get-filterable-attributes",
+        "export-chart"
       ]
     }
   }
@@ -322,7 +324,8 @@ Integration with Claude for Desktop:
         "list-charts",
         "get-chart",
         "export-chart",
-        "get-filterable-attributes"
+        "get-filterable-attributes",
+        "export-chart"
       ]
     }
   }
