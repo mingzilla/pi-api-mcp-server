@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mingzilla-pi-api-mcp-server-badge.png)](https://mseep.ai/app/mingzilla-pi-api-mcp-server)
+
 # PI API MCP Server
 
 [![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
