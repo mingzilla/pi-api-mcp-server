@@ -348,4 +348,6 @@ MIT License
 
 Ming Huang (mingzilla)
 
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/ccbbfbc9-2cfe-4605-b68f-5f1d447b1190)
+
 [![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
