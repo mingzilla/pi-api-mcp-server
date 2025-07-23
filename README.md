@@ -1,8 +1,10 @@
 # PI API MCP Server
 
-[![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
-
 A Model Context Protocol (MCP) server that provides standardized tools and resources for interacting with the PI Dashboard API. This implementation enables Claude and other MCP-compatible AI assistants to securely access and manage PI Dashboard resources, including categories and charts.
+
+<a href="https://glama.ai/mcp/servers/@mingzilla/pi-api-mcp-server">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@mingzilla/pi-api-mcp-server/badge" alt="PI API Server MCP server" />
+</a>
 
 ### Utilizing PI with MCP
 
@@ -331,7 +333,6 @@ Integration with Claude for Desktop:
   }
 }
 ~~~
-
 
 ### Development Check List
 - update code -> start local server -> test local server with file path to index.js
