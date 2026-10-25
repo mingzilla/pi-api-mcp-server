@@ -1,6 +1,6 @@
 # PI API MCP Server
 
-[![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.mingzilla/pi-api-mcp-server)](https://lightnow.ai/servers/io.github.mingzilla/pi-api-mcp-server)
 
 A Model Context Protocol (MCP) server that provides standardized tools and resources for interacting with the PI Dashboard API. This implementation enables Claude and other MCP-compatible AI assistants to securely access and manage PI Dashboard resources, including categories and charts.
 
@@ -350,4 +350,4 @@ Ming Huang (mingzilla)
 
 [![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/ccbbfbc9-2cfe-4605-b68f-5f1d447b1190)
 
-[![smithery badge](https://smithery.ai/badge/@mingzilla/pi-api-mcp-server)](https://smithery.ai/server/@mingzilla/pi-api-mcp-server)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.mingzilla/pi-api-mcp-server)](https://lightnow.ai/servers/io.github.mingzilla/pi-api-mcp-server)
